@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            text-align: center;
+            background-image: url(sky.jpg);
+            color: white;
+            
+        }
+        h1{
+            color: rgb(255, 0, 0);
+            text-shadow: 2px 2px 1px black;
+            font-family: fantasy;
+
+        }
+        input[type="button"] {
+        text-align: center;
+        background-color: rgb(255, 0, 0);
+        color: white;
+        border-radius: 10px;
+        transition: width 5s;
+        width:initial;
+    }
+    input[type="button"]:hover {
+        width: 100px;
+        font-size: large;
+   
+    }
+    p{
+        text-shadow: 2px 2px 0px black;
+
+        }
+        
+    </style>
+<head>
+	<title>Gioca!</title>
+<script>
+
+var n = 100
+
+function random(n)
+{
+    return Math.floor(Math.random() * n);
+}
+
+
+var myNumber = 0
+var nGuesses = 0
+
+
+function guessnum()
+{
+    var response
+    var num = parseInt(document.forms[0].guess.value)
+    
+    document.forms[0].guess.value = num 
+
+    nGuesses++ 
+    response = "Il tuo numero e' "
+    
+    if (num < myNumber)    response = response + "troppo basso"
+    if (num > myNumber)    response = response + "troppo alto"
+    if (num == myNumber) 
+    {
+        response = response + " giusto!!"
+        nGuesses = 0
+        myNumber = random(100)+1
+    }
+    document.forms[1].result.value=response
+    document.forms[1].guesses.value=nGuesses
+    document.forms[0].guess.focus()
+    document.forms[0].guess.select()
+    return true
+}
+
+    
+function giveup()
+{
+    var response
+    
+    nGuesses = 0
+    response = "Il numero e' " + myNumber +".  Dai un altro numero."
+    myNumber = random(100)+1
+    document.forms[1].result.value=response
+    document.forms[1].guesses.value=nGuesses
+    document.forms[0].guess.focus()
+    document.forms[0].guess.select()
+}
+
+</script>
+
+</head>
+<body onload="document.forms[0].guess.focus(); document.forms[0].guess.select()">
+<br>
+<H1>Indovina il numero</H1>
+<SCRIPT>
+    myNumber = random(100)+1
+    nGuesses = 0
+</SCRIPT>
+
+<FORM onSubmit="guessnum(); return false">
+<p>Scrivi numero:</p> <INPUT TYPE="text" NAME="guess" SIZE=5>
+<INPUT TYPE="button" VALUE="Prova" onClick="guessnum()">
+<INPUT TYPE="button" VALUE="Soluzione" onClick="giveup()" >
+</FORM>
+
+<FORM><PRE>
+<p>#-Tentativo:</p> <INPUT TYPE="text" NAME="guesses" SIZE=3 readonly="readonly"  >
+    <p>INFO:</p> <INPUT TYPE="text" NAME="result" SIZE=44 readonly="readonly">
+</PRE></FORM>
